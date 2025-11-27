@@ -33,7 +33,13 @@ namespace E_Commerce.Web
             });
             builder.Services.AddScoped<IDataInitializer, DataInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddAutoMapper(X => X.AddProfile<ProductProfile>());
+
+            //Singleton object(Create the object only once during the application lifetime)
+            //builder.Services.AddAutoMapper(X => X.AddProfile<ProductProfile>());
+
+            builder.Services.AddAutoMapper(typeof(ServicesAssemblyReference).Assembly);
+
+
             builder.Services.AddScoped<IProdcutService, ProductService>();
 
 
@@ -56,6 +62,8 @@ namespace E_Commerce.Web
 
             app.UseHttpsRedirection();
 
+
+            app.UseStaticFiles();
             app.UseAuthorization();
 
 
