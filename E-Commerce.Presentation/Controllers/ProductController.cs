@@ -1,4 +1,5 @@
 ﻿using E_Commerce.Services_Abstraction;
+using E_Commerce.Shared;
 using E_Commerce.Shared.DTOs.ProductDTOs;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,9 +24,9 @@ namespace E_Commerce.Presentation.Controllers
         [HttpGet]
         //GET :BaseUrl/api/Products
                             // to can detect what to return in happy scenario
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProducts()
+        public async Task<ActionResult<PagintaedResult<ProductDTO>>> GetAllProducts([FromQuery] ProductQueryParams queryParams)
         {
-            var Products = await _prodcutService.GetAllProductsAsync();
+            var Products = await _prodcutService.GetAllProductsAsync(queryParams);
             return Ok(Products);
         }
 
