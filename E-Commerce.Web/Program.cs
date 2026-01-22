@@ -8,6 +8,7 @@ using E_Commerce.Services.MappingProfiles;
 using E_Commerce.Services_Abstraction;
 using E_Commerce.Web.Extentions;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using System.Threading.Tasks;
 
 namespace E_Commerce.Web
@@ -22,6 +23,8 @@ namespace E_Commerce.Web
 
             // Add services to the container.
 
+            #region Services To The Container
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -29,21 +32,23 @@ namespace E_Commerce.Web
             builder.Services.AddDbContext<StoreDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-
             });
             builder.Services.AddScoped<IDataInitializer, DataInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             //Singleton object(Create the object only once during the application lifetime)
             //builder.Services.AddAutoMapper(X => X.AddProfile<ProductProfile>());
-
             builder.Services.AddAutoMapper(typeof(ServicesAssemblyReference).Assembly);
-
-
             builder.Services.AddScoped<IProdcutService, ProductService>();
+            builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+            {
+                return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnection")!);
+            });
+            builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+            builder.Services.AddScoped<IBasketService, BasketService>();
 
 
 
+            #endregion
 
 
             var app = builder.Build();
