@@ -1,4 +1,5 @@
-﻿using E_Commerce.Services_Abstraction;
+﻿using E_Commerce.Presentation.Attributes;
+using E_Commerce.Services_Abstraction;
 using E_Commerce.Shared;
 using E_Commerce.Shared.DTOs.ProductDTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,7 @@ namespace E_Commerce.Presentation.Controllers
         }
 
         [HttpGet]
+        [RedisCache]
         //GET :BaseUrl/api/Products
                             // to can detect what to return in happy scenario
         public async Task<ActionResult<PagintaedResult<ProductDTO>>> GetAllProducts([FromQuery] ProductQueryParams queryParams)

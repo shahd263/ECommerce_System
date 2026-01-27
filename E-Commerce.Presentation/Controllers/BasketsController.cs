@@ -1,4 +1,5 @@
-﻿using E_Commerce.Services_Abstraction;
+﻿using E_Commerce.Presentation.Attributes;
+using E_Commerce.Services_Abstraction;
 using E_Commerce.Shared.DTOs.BasketDTOs;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,7 @@ namespace E_Commerce.Presentation.Controllers
         }
 
         [HttpGet]
+        
         public async Task<ActionResult<BasketDTO>> GetBasket(string id)
         {
             var Basket = await _basketService.GetBasketAsync(id);
