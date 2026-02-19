@@ -11,9 +11,8 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.Presentation.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductController :ControllerBase
+    
+    public class ProductController :ApiBaseController
     {
         private readonly IProdcutService _prodcutService;
 
@@ -39,7 +38,7 @@ namespace E_Commerce.Presentation.Controllers
         public async Task<ActionResult<ProductDTO>> GetProduct(int id)
         {
             var Product = await _prodcutService.GetProductByIdAsync(id);
-            return Ok(Product);
+            return HandleResult<ProductDTO>(Product);
         }
 
 
