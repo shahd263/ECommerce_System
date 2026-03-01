@@ -2,6 +2,7 @@
 using E_Commerce.Domain.Contracts;
 using E_Commerce.Persistence.Data.DataSeed;
 using E_Commerce.Persistence.Data.DbContexts;
+using E_Commerce.Persistence.IdentityData.DbContexts;
 using E_Commerce.Persistence.Repositories;
 using E_Commerce.Services;
 using E_Commerce.Services.MappingProfiles;
@@ -55,6 +56,10 @@ namespace E_Commerce.Web
             {
                 options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateApiValidationResponse;
             });
+            builder.Services.AddDbContext<StoreIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+            });
 
 
 
@@ -67,6 +72,7 @@ namespace E_Commerce.Web
 
             #region Data Seeding
             await app.MigrateDatabaseAsync();
+            await app.MigrateIdentityDatabaseAsync();
             await app.SeedDatabaseAsync(); 
             #endregion
 
