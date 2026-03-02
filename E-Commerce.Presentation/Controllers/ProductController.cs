@@ -2,6 +2,7 @@
 using E_Commerce.Services_Abstraction;
 using E_Commerce.Shared;
 using E_Commerce.Shared.DTOs.ProductDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace E_Commerce.Presentation.Controllers
         {
             _prodcutService = prodcutService;
         }
-
+        [Authorize]
         [HttpGet]
         [RedisCache]
         //GET :BaseUrl/api/Products
